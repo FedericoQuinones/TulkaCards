@@ -109,8 +109,6 @@ input, select, textarea {
   max-width: 780px;
   margin: 0 auto;
   padding: 24px 16px 140px;
-  position: relative;
-  z-index: 2;
 }
 
 /* ===================== Navigation — Top (Desktop/Tablet) ===================== */
@@ -599,7 +597,7 @@ input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 200;
+  z-index: 1000;
   padding: 16px;
   animation: fadeIn 0.2s var(--ease-smooth);
 }
