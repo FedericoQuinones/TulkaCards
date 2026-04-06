@@ -595,10 +595,11 @@ input, select, textarea {
   background: rgba(29, 78, 92, 0.35);
   backdrop-filter: blur(8px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   z-index: 1000;
-  padding: 16px;
+  padding: 24px 16px;
+  overflow-y: auto;
   animation: fadeIn 0.2s var(--ease-smooth);
 }
 
@@ -611,10 +612,10 @@ input, select, textarea {
   padding: 28px;
   width: 100%;
   max-width: 460px;
-  max-height: 85vh;
-  overflow-y: auto;
+  overflow: visible;
   box-shadow: 0 20px 60px rgba(29, 78, 92, 0.2);
   animation: slideUp 0.3s var(--ease-bounce);
+  margin: auto;
 }
 
 .modal-lg {
@@ -1761,6 +1762,7 @@ input, select, textarea {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--teal);
 }
+
 
 /* ===================== Selection ===================== */
 
