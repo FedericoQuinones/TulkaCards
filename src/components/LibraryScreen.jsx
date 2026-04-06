@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
-import { STARTER_DECKS } from '../data/starterDecks'
+import { STARTER_DECKS, CATEGORIES } from '../data/starterDecks'
 
 export default function LibraryScreen({ userDecks, onAddDeck }) {
+  const [activeCategory, setActiveCategory] = useState('all')
   const [previewDeck, setPreviewDeck] = useState(null)
   const [addedIds, setAddedIds] = useState(new Set())
 
-  const isAlreadyAdded = (starterId) => {
-    return userDecks.some(d => d.starterId === starterId) || addedIds.has(starterId)
-  }
+  const isAlreadyAdded = (starterId) =>
+    userDecks.some(d => d.starterId === starterId) || addedIds.has(starterId)
+
+  const filteredDecks = activeCategory === 'all'
+    ? STARTER_DECKS
+    : STARTER_DECKS.filter(d => d.category === activeCategory)
 
   const handleAdd = (starterDeck) => {
     onAddDeck(starterDeck)
@@ -19,11 +23,33 @@ export default function LibraryScreen({ userDecks, onAddDeck }) {
     <div className="screen library-screen">
       <div className="section-header">
         <h2>Starter Packs</h2>
-        <p className="section-subtitle">Pre-made decks ready to use. Tap to preview, then add to your collection.</p>
+        <p className="section-subtitle">Pre-made decks by topic. Tap to preview, then add to your collection.</p>
       </div>
 
+      {/* Category tabs */}
+      <div className="category-tabs" role="tablist">
+        {CATEGORIES.map(cat => (
+          <button
+            key={cat.id}
+            className={`category-tab ${activeCategory === cat.id ? 'active' : ''}`}
+            onClick={() => setActiveCategory(cat.id)}
+            role="tab"
+            aria-selected={activeCategory === cat.id}
+          >
+            <span className="category-tab-emoji">{cat.emoji}</span>
+            <span className="category-tab-label">{cat.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Deck count */}
+      <p className="library-count">
+        {filteredDecks.length} pack{filteredDecks.length !== 1 ? 's' : ''}
+        {activeCategory !== 'all' && ` in ${CATEGORIES.find(c => c.id === activeCategory)?.label}`}
+      </p>
+
       <div className="deck-grid">
-        {STARTER_DECKS.map(deck => {
+        {filteredDecks.map(deck => {
           const added = isAlreadyAdded(deck.id)
           return (
             <button
